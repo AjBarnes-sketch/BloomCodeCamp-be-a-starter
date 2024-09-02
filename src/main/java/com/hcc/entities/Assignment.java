@@ -3,6 +3,7 @@ package com.hcc.entities;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "assignments")
 public class Assignment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,8 +14,10 @@ public class Assignment {
     private String branch;
     private String reviewVideoUrl;
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
     @ManyToOne
+    @JoinColumn(name = "code_reviewer_id")
     private User codeReviewer;
 
     // Constructor

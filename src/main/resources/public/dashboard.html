@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learner Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="dashboard-container">
+    <header>
+        <h1>Learner Dashboard</h1>
+        <div class="header-actions">
+            <button class="submit-btn" onclick="window.location.href = 'createassignment.html';">Submit New Assignment</button>
+            <button class="logout-btn">Logout</button>
+        </div>
+        <p class="welcome-msg">Welcome, Learner...</p>
+    </header>
+
+    <section class="assignment-section">
+        <h2>Working On</h2>
+        <div class="assignment-cards" id = "workingon">
+            <!--
+            <div class="assignment-card">Assignment 1</div>
+            <div class="assignment-card">Assignment 2</div>
+            <div class="assignment-card">Assignment 3</div>
+            -->
+        </div>
+    </section>
+
+    <section class="assignment-section">
+        <h2>Submitted</h2>
+        <div class="assignment-cards" id="submitted">
+<!--            <div class="assignment-card">Assignment 4</div>-->
+<!--            <div class="assignment-card">Assignment 5</div>-->
+<!--            <div class="assignment-card">Assignment 6</div>-->
+        </div>
+    </section>
+
+    <section class="assignment-section">
+        <h2>Completed</h2>
+        <div class="assignment-cards" id="completed">
+<!--            <div class="assignment-card">Assignment 7</div>-->
+        </div>
+    </section>
+</div>
+<script>
+    var token = localStorage.getItem("jwtToken");
+   fetch('http://localhost:8080/api/assignments', {
+                method: 'GET',
+                headers:
+                    {
+                    'Authorization': 'Bearer ' + token
+                },
+
+            }) .then(response => {
+                if (!response.ok) {
+                    throw new Error('Invalid credentials');
+                }
+                return response.json();
+            }). then(data => {
+                console.log(data);
+                for(let i = 0; i < data.length; i++) {
+                    var assignment = data[i].assignment;
+                    console.log(assignment);
+                    if (assignment.status === "Working on") {
+                        document.getElementById("workingon").innerHTML = JSON.stringify(assignment);
+                    } else if(assignment.status === "Completed") {
+                        document.getElementById("completed").innerHTML = JSON.stringify(assignment);
+                    } else if(assignment.status === "Submitted") {
+                        document.getElementById("submitted").innerHTML = JSON.stringify(assignment);
+                    }
+                }
+   });
+</script>
+</body>
+</html>

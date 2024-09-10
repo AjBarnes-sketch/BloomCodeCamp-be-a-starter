@@ -1,0 +1,67 @@
+<html>
+<body>
+    <form id="submit_form" method="post">
+        <label for="status">Status:</label>
+        <select id="status" name="status">
+            <option value="Working on">Working on</option>
+            <option value="Submitted">Submitted</option>
+            <option value="Completed">Completed</option>
+        </select>
+
+        <label for="number">Number:</label>
+        <input type="number" id="number" name="number" required>
+
+        <label for="githubUrl">GitHub URL:</label>
+        <input type="text" id="githubUrl" name="githubUrl" required>
+
+        <label for="branch">Branch:</label>
+        <input type="text" id="branch" name="branch" required>
+
+        <label for="reviewVideoUrl">Review Video URL:</label>
+        <input type="text" id="reviewVideoUrl" name="reviewVideoUrl">
+
+<!--        <label for="user">User:</label>-->
+<!--        <select id="user" name="user">-->
+<!--        </select>-->
+
+<!--        <label for="codeReviewer">Code Reviewer:</label>-->
+<!--        <select id="codeReviewer" name="codeReviewer">-->
+<!--        </select>-->
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+<script>
+    const form = document.querySelector('form');
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault(); // Prevent default form submission  
+
+        const formData = new FormData(form); // Create a FormData object from the  
+
+        const data = {};
+        formData.forEach((value, key) => {
+            data[key] = value;
+        });
+
+        fetch('/api/assignments/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Bearer " + localStorage.getItem("jwtToken")
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Handle  
+                //window.location.href = "dashboard.html";
+                console.log(data);
+            })
+            .catch(error => {
+                // Handle errors here
+                console.error(error);
+            });
+    });
+</script>
+</html>

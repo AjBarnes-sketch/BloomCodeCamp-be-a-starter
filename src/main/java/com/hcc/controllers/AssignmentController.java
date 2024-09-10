@@ -5,6 +5,7 @@ import com.hcc.entities.Assignment;
 import com.hcc.entities.User;
 import com.hcc.services.AssignmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,7 @@ public class AssignmentController {
     @Autowired
     AssignmentService assignmentService;
 
+    @CrossOrigin
     @GetMapping
     public List<AssignmentResponseDto> getAssignmentsByUser(@AuthenticationPrincipal User user) {
         return assignmentService.getAssignmentsByUserId(user);
@@ -32,9 +34,11 @@ public class AssignmentController {
         return assignmentService.updateAssignment(id, assignmentDetails);
     }
 
-    @PostMapping
-    public AssignmentResponseDto createAssignment(@RequestBody Assignment assignment, @AuthenticationPrincipal User user) {
-        return assignmentService.createAssignment(assignment);
+    @CrossOrigin
+    @PostMapping("/create")
+    public ResponseEntity<Assignment> createAssignment(@RequestBody Assignment assignment, @AuthenticationPrincipal User user) {
+        assignment.setUser(user);
+        return ResponseEntity.ok(assignmentService.createAssignment(assignment));
     }
 
 }

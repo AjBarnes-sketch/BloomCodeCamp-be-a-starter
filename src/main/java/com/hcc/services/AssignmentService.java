@@ -30,9 +30,9 @@ public class AssignmentService {
         return new AssignmentResponseDto(assignmentRepository.findById(id).get());
     }
 
-    public AssignmentResponseDto createAssignment(Assignment assignment) {
+    public Assignment createAssignment(Assignment assignment) {
         Assignment savedAssignment = assignmentRepository.save(assignment);
-        return new AssignmentResponseDto(savedAssignment);
+        return savedAssignment;
     }
 
     public AssignmentResponseDto updateAssignment(Long id, Assignment assignmentDetails) {

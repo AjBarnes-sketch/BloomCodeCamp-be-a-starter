@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learner Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="dashboard-container">
+    <header>
+        <h1>Learner Dashboard</h1>
+        <div class="header-actions">
+            <button class="submit-btn">Submit New Assignment</button>
+            <button class="logout-btn">Logout</button>
+        </div>
+        <p class="welcome-msg">Welcome, Learner...</p>
+    </header>
+
+    <section class="assignment-section">
+        <h2>Needs Rubric</h2>
+        <div class="assignment-cards">
+            <div class="assignment-card">Assignment 1</div>
+            <div class="assignment-card">Assignment 2</div>
+            <div class="assignment-card">Assignment 3</div>
+        </div>
+    </section>
+
+    <section class="assignment-section">
+        <h2>Complete</h2>
+        <div class="assignment-cards">
+            <div class="assignment-card">Assignment 4</div>
+            <div class="assignment-card">Assignment 5</div>
+            <div class="assignment-card">Assignment 6</div>
+        </div>
+    </section>
+
+    <section class="assignment-section">
+        <h2>In Review</h2>
+        <div class="assignment-cards">
+            <div class="assignment-card">Assignment 7</div>
+        </div>
+    </section>
+</div>
+<script>
+    var token = localStorage.getItem("jwtToken");
+   fetch('http://localhost:8080/api/assignments', {
+                method: 'GET',
+                headers:
+                    {
+                    'Authorization': 'Bearer ' + token
+                },
+
+            }) .then(response => {
+                if (!response.ok) {
+                    throw new Error('Invalid credentials');
+                }
+                console.log (response.json());
+            })
+</script>
+</body>
+</html>

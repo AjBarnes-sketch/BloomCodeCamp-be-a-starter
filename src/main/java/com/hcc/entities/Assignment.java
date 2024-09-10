@@ -32,6 +32,7 @@ public class Assignment {
         this.user = user;
         this.codeReviewer = codeReviewer;
     }
+    public Assignment() {}
 
     // Getter and Setter for id
     public Long getId() {
@@ -120,8 +121,5 @@ public class Assignment {
     public void editSubmission(String githubUrl, String branch) {
     }
 
-    public String getTitle() {
-        return getTitle();
     }
-}
 
